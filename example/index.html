@@ -1,0 +1,125 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<div id="pu-menu">
+    <div id="pu-home">Home</div>
+    <div id="legendBtn">Show legend</div>
+    <div id="pipeline-list">Scope : &nbsp</div>
+</div>
+<div id="pu-content">
+    <div id="legend">
+        <svg height="75" class="close">
+            <g style="opacity: 1;" transform="translate(43.43359375,35.453125)">
+                <polygon points="-29.4375,0 0,35.453125 29.4375,0 0,-35.453125" style="fill : #f77"></polygon>
+                <g class="label" transform="translate(0,0)">
+                    <g transform="translate(-19.4375,-7.7265625)">
+                        <text>
+                            <tspan xml:space="preserve" dy="1em" x="1">Action</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+            <g style="opacity: 1;" transform="translate(136.7578125,35.453125)">
+                <ellipse x="-27.8828125" y="-17.7265625" rx="27.8828125" ry="17.7265625" style="fill : #77f"></ellipse>
+                <g class="label" transform="translate(0,0)">
+                    <g transform="translate(-17.8828125,-7.7265625)">
+                        <text>
+                            <tspan xml:space="preserve" dy="1em" x="1">Event</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+            <g transform="translate(224.46875,35.453125)" style="opacity: 1;">
+                <rect rx="5" ry="5" x="-26.71875" y="-17.7265625" width="53.4375" height="35.453125"
+                      style="fill : #7f7"></rect>
+                <g class="label" transform="translate(0,0)">
+                    <g transform="translate(-16.71875,-7.7265625)">
+                        <text>
+                            <tspan xml:space="preserve" dy="1em" x="1">Store</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </div>
+    <div id="pu-scene">
+    </div>
+    <div id="pu-info">
+        <h3>Node Information</h3>
+        <pre id="pu-node-info">Select a node to display some info</pre>
+    </div>
+    <h3>History</h3>
+
+    <div id="pu-graph-list">
+    </div>
+</div>
+
+<script src="../dist/app.js"></script>
+<script>
+    /*
+     // Render multiple pipeline defined in file conf.json
+     d3.json('conf.json', function (conf) {
+     pu.getPipelines(conf, function (pipelines) {
+     pu.renderPipeline(pipelines);
+     });
+     })
+     */
+
+    /*
+     // Or simpler :
+     pu.renderPipelineFromConf('conf.json');
+     */
+
+    /*
+     // A unique pipeline
+     d3.json('pipeline.json', pu.renderPipeline);
+     */
+
+    // A full featured example with multiple pipelines
+    pu.configure({
+        color: {
+            EVENT: "#77f"
+        },
+        shape: {
+            STORE: "rect"
+        }
+    })
+
+    pu.renderPipelineFromConf('conf.json', function () {
+        var container = d3.select("#pipeline-list").append("select").on('change', function () {
+            if (pu.pipelineList[this.selectedIndex - 1]) {
+                pu.renderPipeline(pu.pipelineList[this.selectedIndex - 1])
+            } else {
+                pu.renderPipeline(pu.pipelineList);
+            }
+        })
+
+        container.append("option").html("All pipelines");
+
+        pu.pipelineList.forEach(function (pipeline) {
+            container
+                    .append("option")
+                    .html(pipeline.name)
+                    .attr("value", pipeline.name);
+        })
+    });
+
+
+    var legend = d3.select("#legend svg")
+
+    if (!legend.empty()) {
+        var legendBtn = d3.select("#legendBtn");
+        if (!legendBtn.empty()) {
+            legendBtn.on("click", function () {
+                legend.classed('close', legend.attr("class") !== "close");
+            })
+        }
+    }
+
+</script>
+</body>
+</html>

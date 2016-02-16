@@ -1,0 +1,161 @@
+
+body {
+    background: #d2d5da;
+    margin: 0;
+    font-weight: 300;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+svg {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.clusters rect {
+    fill: #00ffd0;
+    stroke: #999;
+    stroke-width: 1.5px;
+}
+
+.node {
+    cursor: pointer;
+}
+
+#pu-scene,
+#pu-graph-list,
+#pu-info,
+#pu-node-info {
+    display: inline-block;
+}
+
+#pu-scene svg,
+#pu-graph-list,
+#pu-info,
+#legend svg,
+#pu-graph-list svg {
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .12);
+}
+
+#legend {
+    display: block;
+    margin-top: 10px;
+}
+
+#pu-graph-list svg {
+    cursor: pointer;
+    margin: 5px;
+}
+
+#pu-graph-list {
+    display: block;
+    min-height: 50px;
+    vertical-align: top;
+    padding: 5px;
+}
+
+#pu-info {
+    vertical-align: top;
+    padding: 10px;
+}
+
+#pu-node-info {
+    background-color: ghostwhite;
+    border: 1px solid silver;
+    padding: 10px 20px;
+    margin: 20px;
+}
+
+rect,
+polygon,
+ellipse {
+    stroke: #999;
+    stroke-width: 1.5px;
+}
+
+.edgePath path {
+    stroke: #333;
+    stroke-width: 1.5px;
+}
+
+.close {
+    height: 0;
+    padding: 0;
+}
+
+#legend svg,
+#pu-scene svg,
+#pu-graph-list svg,
+#pu-node-info {
+    -webkit-transition: height 0.5s, padding 0.5s, width 0.5s;
+    -moz-transition: height 0.5s, padding 0.5s, width 0.5s;
+    -ms-transition: height 0.5s, padding 0.5s, width 0.5s;
+    -o-transition: height 0.5s, padding 0.5s, width 0.5s;
+    transition: height 0.5s, padding 0.5s, width 0.5s;
+}
+
+pre {
+    outline: 1px solid #ccc;
+    padding: 5px;
+    margin: 5px;
+}
+
+.string {
+    color: green;
+}
+
+.number {
+    color: darkorange;
+}
+
+.boolean {
+    color: blue;
+}
+
+.null {
+    color: magenta;
+}
+
+.key {
+    color: red;
+}
+
+#pu-scene {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#pu-menu {
+    /*height: 25px;*/
+    background: #525864;
+    color: white;
+    padding-left: 20px;
+}
+
+#pu-menu #pu-home,
+#pu-menu #pipeline-list,
+#pu-menu #legendBtn {
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px;
+    border-right: 1px solid grey;
+}
+
+#pu-content {
+    padding: 10px;
+}
+
+#pu-menu select {
+    background: #fff;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#pu-menu select option {
+    background-color: #fff;
+}

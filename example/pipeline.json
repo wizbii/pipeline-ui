@@ -1,0 +1,44 @@
+{
+  "name": "pipeline-example",
+  "actions": {
+    "page_loaded": {
+      "name": "Page loaded"
+    }
+  },
+  "incoming_events": {
+    "page_loaded": {
+      "name": "Page loaded"
+    }
+  },
+  "outgoing_events": {
+    "pipeline_rendered": {
+      "name": "Pipeline rendered"
+    }
+  },
+  "action_creators": {
+    "page_loaded": {
+      "created_action": {
+        "name": "Page loaded"
+      },
+      "triggered_by_events": [
+        {
+          "name": "Page loaded"
+        }
+      ]
+    }
+  },
+  "stores": {
+    "render_pipeline": {
+      "name": "Render pipeline",
+      "triggered_by_stores": {},
+      "triggered_by_actions": {
+        "page_loaded": {
+          "name": "Page loaded"
+        }
+      },
+      "triggered_event": {
+        "name": "Pipeline rendered"
+      }
+    }
+  }
+}
