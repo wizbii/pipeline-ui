@@ -305,6 +305,7 @@ export function renderPipeline (pipeline, cb) {
 
 
 function init (g) {
+  fn.beforeAddNodeToGraph();
   forEach(fn.getTree(), function (node, key) {
     fn.addNodeToGraph(g, key, node, false, false, true);
   })
@@ -379,6 +380,7 @@ function addListenerOnNodes (g, svg, svgGroup) {
           return {};
         });
 
+      fn.beforeAddNodeToGraph();
       fn.addNodeToGraph(g, t, fn.getTree()[t], true, true);
       renderGraph(g, svgGroup);
       scaleGraph(g, svg, svgGroup);

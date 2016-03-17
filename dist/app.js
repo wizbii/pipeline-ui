@@ -386,6 +386,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *******************/
 
 	function init(g) {
+	  fn.beforeAddNodeToGraph();
 	  (0, _forEach2.default)(fn.getTree(), function (node, key) {
 	    fn.addNodeToGraph(g, key, node, false, false, true);
 	  });
@@ -456,6 +457,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return {};
 	      });
 
+	      fn.beforeAddNodeToGraph();
 	      fn.addNodeToGraph(g, t, fn.getTree()[t], true, true);
 	      renderGraph(g, svgGroup);
 	      scaleGraph(g, svg, svgGroup);
@@ -26797,6 +26799,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	exports.initTree = initTree;
+	exports.beforeAddNodeToGraph = beforeAddNodeToGraph;
 	exports.getTree = getTree;
 	exports.init = init;
 	exports.addNodeToTree = addNodeToTree;
@@ -26815,10 +26818,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	var tree = {},
 	    TYPE,
 	    COLOR,
-	    SHAPE;
+	    SHAPE,
+	    rendered = [];
 
 	function initTree() {
 	  tree = {};
+	}
+
+	function beforeAddNodeToGraph() {
+	  rendered = [];
 	}
 
 	function getTree() {
@@ -26860,25 +26868,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var init = arguments.length <= 5 || arguments[5] === undefined ? false : arguments[5];
 
 	  g.setNode(key, { label: node.name, shape: SHAPE[getTypeFromKey(key)], type: TYPE[getTypeFromKey(key)] });
+	  rendered.push(key);
 	  if (node.parents.length != 0) {
 	    (0, _forEach2.default)(node.parents, function (parent) {
-	      if (buildParents || init) {
-	        g.setEdge(parent, key);
-	      }
-	      if (buildParents) {
-	        var parentNode = tree[parent];
-	        addNodeToGraph(g, parent, parentNode, true, false);
+	      if (rendered.indexOf(parent) === -1) {
+	        if (buildParents || init) {
+	          g.setEdge(parent, key);
+	        }
+	        if (buildParents) {
+	          var parentNode = tree[parent];
+	          addNodeToGraph(g, parent, parentNode, true, false);
+	        }
 	      }
 	    });
 	  }
 	  if (node.children.length != 0) {
 	    (0, _forEach2.default)(node.children, function (child) {
-	      if (buildChildren || init) {
-	        g.setEdge(key, child);
-	      }
-	      if (buildChildren) {
-	        var childNode = tree[child];
-	        addNodeToGraph(g, child, childNode, false, true);
+	      if (rendered.indexOf(child) === -1) {
+	        if (buildChildren || init) {
+	          g.setEdge(key, child);
+	        }
+	        if (buildChildren) {
+	          var childNode = tree[child];
+	          addNodeToGraph(g, child, childNode, false, true);
+	        }
 	      }
 	    });
 	  }

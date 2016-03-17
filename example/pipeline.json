@@ -39,6 +39,18 @@
       "triggered_event": {
         "name": "Pipeline rendered"
       }
+    },
+    "render_pipeline2": {
+      "name": "Render pipeline2",
+      "triggered_by_stores": {},
+      "triggered_by_actions": {
+        "page_loaded": {
+          "name": "Page loaded"
+        }
+      },
+      "triggered_event": {
+        "name": "Page loaded"
+      }
     }
   }
 }

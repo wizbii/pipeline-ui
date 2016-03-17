@@ -1,9 +1,13 @@
 import forEach from 'lodash/forEach';
 
-var tree = {}, TYPE, COLOR, SHAPE;
+var tree = {}, TYPE, COLOR, SHAPE, rendered = [];
 
 export function initTree () {
   tree = {};
+}
+
+export function beforeAddNodeToGraph() {
+  rendered = [];
 }
 
 export function getTree () {
@@ -41,25 +45,30 @@ export function getTypeFromKey (key) {
 
 export function addNodeToGraph (g, key, node, buildParents = false, buildChildren = false, init = false) {
   g.setNode(key, {label: node.name, shape: SHAPE[getTypeFromKey(key)], type: TYPE[getTypeFromKey(key)]})
+  rendered.push(key);
   if (node.parents.length != 0) {
     forEach(node.parents, function (parent) {
-      if (buildParents || init) {
-        g.setEdge(parent, key);
-      }
-      if (buildParents) {
-        var parentNode = tree[parent];
-        addNodeToGraph(g, parent, parentNode, true, false);
+      if (rendered.indexOf(parent) === -1) {
+        if (buildParents || init) {
+          g.setEdge(parent, key);
+        }
+        if (buildParents) {
+          var parentNode = tree[parent];
+            addNodeToGraph(g, parent, parentNode, true, false);
+        }
       }
     })
   }
   if (node.children.length != 0) {
     forEach(node.children, function (child) {
-      if (buildChildren || init) {
-        g.setEdge(key, child);
-      }
-      if (buildChildren) {
-        var childNode = tree[child];
-        addNodeToGraph(g, child, childNode, false, true);
+      if (rendered.indexOf(child) === -1) {
+        if (buildChildren || init) {
+          g.setEdge(key, child);
+        }
+        if (buildChildren) {
+          var childNode = tree[child];
+            addNodeToGraph(g, child, childNode, false, true);
+        }
       }
     })
   }
